@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farewell Journey</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body { box-sizing: border-box; }
+    * { font-family: 'Quicksand', sans-serif; }
+    .heading-font { font-family: 'Cormorant Garamond', serif; }
+
+    .page {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .page.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
+    }
+
+    /* animations */
+    @keyframes spiralIn {
+      from { transform: scale(0) rotate(-540deg); opacity: 0; }
+      to { transform: scale(1) rotate(0); opacity: 1; }
+    }
+    @keyframes spiralOut {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0) rotate(540deg); opacity: 0; }
+    }
+    .spiral-in { animation: spiralIn 1.2s forwards; }
+    .spiral-out { animation: spiralOut 0.8s forwards; }
+
+    @keyframes curtainIn {
+      from { clip-path: inset(0 50%); opacity: 0; }
+      to { clip-path: inset(0); opacity: 1; }
+    }
+    @keyframes curtainOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    .curtain-in { animation: curtainIn 1s forwards; }
+    .curtain-out { animation: curtainOut 0.6s forwards; }
+
+    .nav-btn {
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body class="h-full w-full overflow-hidden">
+
+<div id="app" class="relative h-full w-full">
+
+<!-- ================= PAGE 1 (SCHOOL IMAGE) ================= -->
+<div id="page1" class="page active"
+  style="
+    background-image:
+      linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+      url('school.jpg');
+    background-size: cover;
+    background-position: center;
+  ">
+
+  <div class="text-center max-w-3xl">
+    <div class="text-6xl mb-6">🌟</div>
+
+    <h1 id="mainTitle"
+        class="heading-font text-5xl md:text-7xl font-bold mb-6 text-yellow-400">
+      Until We Meet Again
+    </h1>
+
+    <p id="goodbyeMessage"
+       class="text-xl md:text-2xl mb-10 text-gray-200">
+      Every ending is a new beginning in disguise.
+    </p>
+
+    <button onclick="goToPage(2,'spiral')"
+      class="nav-btn px-10 py-4 rounded-full text-lg font-semibold bg-red-500 text-white">
+      Begin the Journey →
+    </button>
+  </div>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div id="page2" class="page"
+ style="background: linear-gradient(135deg,#2d132c,#801336,#c72c41);">
+  <div class="text-center max-w-2xl">
+    <div class="text-6xl mb-6">📸</div>
+    <h2 class="heading-font text-4xl md:text-6xl text-yellow-300 mb-6">
+      Cherished Memories
+    </h2>
+    <p id="memoryText" class="text-xl md:text-2xl mb-10 italic text-pink-100">
+      "The laughter we shared will always stay."
+    </p>
+    <button onclick="goToPage(3,'curtain')" class="nav-btn px-8 py-3 bg-yellow-400 rounded-full">
+      Continue →
+    </button>
+  </div>
+</div>
+
+<!-- ================= PAGE 3 ================= -->
+<div id="page3" class="page"
+ style="background: linear-gradient(135deg,#134e5e,#1a535c,#71c9ce);">
+  <div class="text-center max-w-2xl">
+    <div class="text-6xl mb-6">🌱</div>
+    <h2 class="heading-font text-4xl md:text-6xl text-yellow-200 mb-6">
+      Growth & Gratitude
+    </h2>
+    <p class="text-xl md:text-2xl mb-10 text-cyan-100">
+      Thank you for being part of this journey.
+    </p>
+    <button onclick="goToPage(4,'spiral')" class="nav-btn px-8 py-3 bg-yellow-300 rounded-full">
+      Continue →
+    </button>
+  </div>
+</div>
+
+<!-- ================= PAGE 4 ================= -->
+<div id="page4" class="page"
+ style="background: linear-gradient(135deg,#1e1e2f,#2d2d44,#4a4a6a);">
+  <div class="text-center max-w-2xl">
+    <div class="text-6xl mb-6">✨</div>
+    <h2 class="heading-font text-4xl md:text-6xl text-purple-400 mb-6">
+      Wishes for Tomorrow
+    </h2>
+    <p class="text-xl md:text-2xl mb-10 text-gray-200">
+      May your future be bright and successful.
+    </p>
+    <button onclick="goToPage(5,'spiral')" class="nav-btn px-8 py-3 bg-purple-500 text-white rounded-full">
+      Continue →
+    </button>
+  </div>
+</div>
+
+<!-- ================= PAGE 5 ================= -->
+<div id="page5" class="page"
+ style="background: linear-gradient(135deg,#0d1b2a,#1b263b,#415a77);">
+  <div class="text-center max-w-2xl">
+    <div class="text-6xl mb-6">💫</div>
+    <h2 class="heading-font text-4xl md:text-6xl text-yellow-400 mb-6">
+      Goodbye 💙
+    </h2>
+    <p id="finalWords" class="text-xl md:text-2xl mb-10 text-gray-200">
+      This is not the end — just a new beginning.
+    </p>
+    <button onclick="goToPage(1,'spiral')" class="nav-btn px-8 py-3 bg-yellow-400 rounded-full">
+      Restart ↺
+    </button>
+  </div>
+</div>
+
+<!-- dots -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+  <div class="progress-dot bg-yellow-400"></div>
+  <div class="progress-dot bg-gray-400"></div>
+  <div class="progress-dot bg-gray-400"></div>
+  <div class="progress-dot bg-gray-400"></div>
+  <div class="progress-dot bg-gray-400"></div>
+</div>
+
+</div>
+
+<script>
+  let currentPage = 1;
+  let isAnimating = false;
+
+  const animations = {
+    spiral: { in: 'spiral-in', out: 'spiral-out', duration: 1200 },
+    curtain: { in: 'curtain-in', out: 'curtain-out', duration: 1000 }
+  };
+
+  function goToPage(pageNum, animationType) {
+    if (isAnimating || pageNum === currentPage) return;
+    isAnimating = true;
+
+    const currentEl = document.getElementById('page' + currentPage);
+    const nextEl = document.getElementById('page' + pageNum);
+    const anim = animations[animationType];
+
+    currentEl.classList.add(anim.out);
+
+    setTimeout(() => {
+      currentEl.classList.remove('active', anim.out);
+      nextEl.classList.add('active', anim.in);
+      currentPage = pageNum;
+      isAnimating = false;
+    }, anim.duration);
+  }
+</script>
+
+</body>
+</html>
