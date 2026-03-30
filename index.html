@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CUET PRO 🇮🇳</title>
+
 <style>
 :root{
   --bg:#ffffff;
   --text:#111;
   --card:#ffffff;
-  --side:#f1f5f9;
 }
 
 body{
@@ -17,7 +17,6 @@ body{
  font-family:sans-serif;
  background: var(--bg);
  color: var(--text);
- transition:0.3s;
 }
 
 header{
@@ -28,9 +27,17 @@ header{
  background: linear-gradient(90deg, orange, white, green);
 }
 
-.container{display:flex;flex-wrap:wrap}
-.left{flex:3;padding:15px}
-.right{flex:1;background:var(--side);padding:10px;border-radius:10px}
+.dark{
+ --bg:#0f172a;
+ --text:#fff;
+ --card:#1e293b;
+}
+
+.topbar{
+ display:flex;
+ justify-content:flex-end;
+ padding:10px;
+}
 
 button{
  padding:10px;
@@ -43,22 +50,20 @@ button{
  width:200px;
 }
 
-.topbar{
- display:flex;
- justify-content:flex-end;
- padding:10px;
-}
-
-.toggle{
- width:auto;
- background:black;
- color:white;
-}
-
 .subjects{
  display:flex;
  flex-direction:column;
  align-items:center;
+}
+
+.container{
+ display:flex;
+ flex-wrap:wrap;
+}
+
+.left{
+ flex:3;
+ padding:15px;
 }
 
 .question{
@@ -68,11 +73,15 @@ button{
  border-radius:10px;
 }
 
-.option{display:block;margin:6px 0}
+.option{
+ display:block;
+ margin:6px 0;
+}
 
 .timer{
  font-size:18px;
  font-weight:bold;
+ text-align:center;
 }
 
 .resultScreen{
@@ -83,69 +92,76 @@ button{
 }
 
 #out{
- font-size:20px;
- line-height:1.8;
  background:var(--card);
  padding:20px;
  border-radius:10px;
  display:inline-block;
 }
 
-.dark{
- --bg:#0f172a;
- --text:#fff;
- --card:#1e293b;
- --side:#1e293b;
-}
-
+/* MOBILE FIX */
 @media(max-width:768px){
- .container{flex-direction:column}
+ .container{
+   flex-direction:column;
+ }
+ .timer{
+   position:fixed;
+   top:60px;
+   left:0;
+   width:100%;
+   background:#000;
+   color:#fff;
+   padding:10px;
+   z-index:1000;
+ }
+ .left{
+   margin-top:80px;
+ }
 }
 </style>
 </head>
+
 <body>
 
 <div class="topbar">
-<button class="toggle" onclick="toggleMode()">🌙 Dark Mode</button>
+<button onclick="toggleMode()">🌙 Dark Mode</button>
 </div>
 
 <header>🇮🇳 CUET PRO EXAM 🇮🇳</header>
 
 <div id="login" style="text-align:center;padding:40px">
-<input id="name" placeholder="Enter Name"><br>
+<input id="name" placeholder="Enter Name"><br><br>
 <button onclick="start()">Start</button>
 </div>
 
 <div id="subjectScreen" style="display:none;text-align:center">
 <h2>Select Subject</h2>
+
 <div class="subjects">
 <button onclick="load('phy')">Physics</button>
 <button onclick="load('chem')">Chemistry</button>
 <button onclick="load('math')">Math</button>
 <button onclick="load('bio')">Biology</button>
 <button onclick="load('eng')">English</button>
-
 <button onclick="load('pcme')">PCME</button>
 </div>
 </div>
 
 <div class="container" id="exam" style="display:none">
+
 <div class="left">
 <div id="questions"></div>
 <button onclick="submitTest()">Submit</button>
 </div>
 
-<div class="right">
-<div class="timer" id="timer"></div>
-<div id="nav"></div>
-</div>
+<div class="timer" id="timer">Time: 00:00</div>
+
 </div>
 
 <div class="resultScreen" id="result">
-<h2>📊 Test Result</h2>
+<h2>📊 Result</h2>
 <div id="out"></div>
 <br><br>
-<button onclick="location.reload()">🔄 Retest</button>
+<button onclick="location.reload()">Retest</button>
 </div>
 
 <script>
@@ -156,7 +172,10 @@ function toggleMode(){
 }
 
 function start(){
- if(!document.getElementById('name').value) return alert('Enter name');
+ if(!document.getElementById('name').value){
+   alert("Enter name");
+   return;
+ }
  document.getElementById('login').style.display='none';
  document.getElementById('subjectScreen').style.display='block';
 }
@@ -165,58 +184,68 @@ async function load(subject){
  document.getElementById('subjectScreen').style.display='none';
  document.getElementById('exam').style.display='flex';
 
- let res=await fetch(subject+".json");
- let data=await res.json();
+ let res = await fetch(subject + ".json");
+ let data = await res.json();
 
  data.sort(()=>Math.random()-0.5);
- data=data.slice(0,50);
+ data = data.slice(0,50);
 
- let html="",nav="";
+ let html="";
  answers={};
 
  data.forEach((q,i)=>{
  let n=i+1;
- html+=`<div class="question" id="q${n}"><b>${n}. ${q.q}</b>`;
+
+ html+=`<div class="question">
+ <b>${n}. ${q.q}</b>`;
+
  q.options.forEach((o,j)=>{
  let L=String.fromCharCode(65+j);
- html+=`<label class="option"><input type="radio" name="q${n}" value="${L}">${L}. ${o}</label>`;
+ html+=`<label class="option">
+ <input type="radio" name="q${n}" value="${L}">
+ ${L}. ${o}
+ </label>`;
  });
+
  html+=`</div>`;
  answers[n]=q.answer;
- nav+=`<button onclick="document.getElementById('q${n}').scrollIntoView()">${n}</button>`;
  });
 
  document.getElementById('questions').innerHTML=html;
- document.getElementById('nav').innerHTML=nav;
  startTimer();
 }
 
 function submitTest(){
  let score=0,attempt=0,total=Object.keys(answers).length;
+
  for(let i=1;i<=total;i++){
  let s=document.querySelector(`input[name=q${i}]:checked`);
  if(s) attempt++;
- if(s && s.value==answers[i]) score++;
+ if(s && s.value===answers[i]) score++;
  }
+
  let wrong=attempt-score;
+ let notAttempt=total-attempt;
  let time=Math.floor((Date.now()-startTime)/1000);
  let acc=((score/total)*100).toFixed(2);
 
  document.getElementById('exam').style.display='none';
  document.getElementById('result').style.display='block';
+
  document.getElementById('out').innerHTML=`
- <b>Score:</b> ${score}/${total}<br>
- <b>Attempted:</b> ${attempt}<br>
- <b>Not Attempted:</b> ${total-attempt}<br>
- <b>Right:</b> ${score}<br>
- <b>Wrong:</b> ${wrong}<br>
- <b>Accuracy:</b> ${acc}%<br>
- <b>Time:</b> ${time}s
+ Score: ${score}/${total}<br>
+ Attempted: ${attempt}<br>
+ Not Attempted: ${notAttempt}<br>
+ Right: ${score}<br>
+ Wrong: ${wrong}<br>
+ Accuracy: ${acc}%<br>
+ Time: ${time}s
  `;
 }
 
 function startTimer(){
  startTime=Date.now();
+
  setInterval(()=>{
  let t=Math.floor((Date.now()-startTime)/1000);
  let m=String(Math.floor(t/60)).padStart(2,'0');
