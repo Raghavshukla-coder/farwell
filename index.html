@@ -184,44 +184,57 @@ async function load(subject){
  document.getElementById('subjectScreen').style.display='none';
  document.getElementById('exam').style.display='flex';
 
- let res = await fetch(subject + ".json");
- let data = await res.json();
+ try {
+   let res = await fetch(subject + ".json");
+   let data = await res.json();
 
- data.sort(()=>Math.random()-0.5);
- data = data.slice(0,50);
+   // For passages in JSON
+   if(data.passage) {
+     let passageHTML = `<div class="question"><b>Passage:</b><p>${data.passage}</p></div>`;
+     document.getElementById('questions').innerHTML = passageHTML;
+     data = data.questions;
+   } else {
+     document.getElementById('questions').innerHTML = "";
+   }
 
- let html="";
- answers={};
+   data.sort(()=>Math.random()-0.5);
+   data = data.slice(0,50);
 
- data.forEach((q,i)=>{
- let n=i+1;
+   let html="";
+   answers={};
 
- html+=`<div class="question">
- <b>${n}. ${q.q}</b>`;
+   data.forEach((q,i)=>{
+     let n=i+1;
 
- q.options.forEach((o,j)=>{
- let L=String.fromCharCode(65+j);
- html+=`<label class="option">
- <input type="radio" name="q${n}" value="${L}">
- ${L}. ${o}
- </label>`;
- });
+     html+=`<div class="question">
+     <b>${n}. ${q.question}</b>`;
 
- html+=`</div>`;
- answers[n]=q.answer;
- });
+     q.options.forEach((o,j)=>{
+       let L=String.fromCharCode(65+j);
+       html+=`<label class="option">
+       <input type="radio" name="q${n}" value="${L}">
+       ${L}. ${o}
+       </label>`;
+     });
 
- document.getElementById('questions').innerHTML=html;
- startTimer();
+     html+=`</div>`;
+     answers[n]=q.answer;
+   });
+
+   document.getElementById('questions').innerHTML += html;
+   startTimer();
+ } catch(err){
+   alert("Error loading JSON: " + err);
+ }
 }
 
 function submitTest(){
  let score=0,attempt=0,total=Object.keys(answers).length;
 
  for(let i=1;i<=total;i++){
- let s=document.querySelector(`input[name=q${i}]:checked`);
- if(s) attempt++;
- if(s && s.value===answers[i]) score++;
+   let s=document.querySelector(`input[name=q${i}]:checked`);
+   if(s) attempt++;
+   if(s && s.value===answers[i]) score++;
  }
 
  let wrong=attempt-score;
@@ -247,10 +260,10 @@ function startTimer(){
  startTime=Date.now();
 
  setInterval(()=>{
- let t=Math.floor((Date.now()-startTime)/1000);
- let m=String(Math.floor(t/60)).padStart(2,'0');
- let s=String(t%60).padStart(2,'0');
- document.getElementById('timer').innerText=`Time: ${m}:${s}`;
+   let t=Math.floor((Date.now()-startTime)/1000);
+   let m=String(Math.floor(t/60)).padStart(2,'0');
+   let s=String(t%60).padStart(2,'0');
+   document.getElementById('timer').innerText=`Time: ${m}:${s}`;
  },1000);
 }
 </script>
