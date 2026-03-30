@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CUET PRO 🇮🇳</title>
 <style>
+:root{
+  --bg:#ffffff;
+  --text:#111;
+  --card:#ffffff;
+  --side:#f1f5f9;
+}
+
 body{
  margin:0;
  font-family:sans-serif;
- background: linear-gradient(orange, white, green);
- color:black;
+ background: var(--bg);
+ color: var(--text);
+ transition:0.3s;
 }
 
 header{
@@ -17,11 +25,12 @@ header{
  padding:12px;
  font-size:22px;
  font-weight:bold;
+ background: linear-gradient(90deg, orange, white, green);
 }
 
 .container{display:flex;flex-wrap:wrap}
 .left{flex:3;padding:15px}
-.right{flex:1;background:#ffffffcc;padding:10px;border-radius:10px}
+.right{flex:1;background:var(--side);padding:10px;border-radius:10px}
 
 button{
  padding:10px;
@@ -34,14 +43,26 @@ button{
  width:200px;
 }
 
+.topbar{
+ display:flex;
+ justify-content:flex-end;
+ padding:10px;
+}
+
+.toggle{
+ width:auto;
+ background:black;
+ color:white;
+}
+
 .subjects{
  display:flex;
- flex-direction:column; /* ek ke niche ek */
+ flex-direction:column;
  align-items:center;
 }
 
 .question{
- background:#ffffffcc;
+ background:var(--card);
  margin-top:10px;
  padding:12px;
  border-radius:10px;
@@ -50,7 +71,6 @@ button{
 .option{display:block;margin:6px 0}
 
 .timer{
- color:black;
  font-size:18px;
  font-weight:bold;
 }
@@ -59,20 +79,23 @@ button{
  display:none;
  text-align:center;
  padding:40px;
- font-size:20px; /* bada font */
-}
-
-.resultScreen h2{
- font-size:28px;
+ font-size:20px;
 }
 
 #out{
  font-size:20px;
  line-height:1.8;
- background:#ffffffcc;
+ background:var(--card);
  padding:20px;
  border-radius:10px;
  display:inline-block;
+}
+
+.dark{
+ --bg:#0f172a;
+ --text:#fff;
+ --card:#1e293b;
+ --side:#1e293b;
 }
 
 @media(max-width:768px){
@@ -81,6 +104,10 @@ button{
 </style>
 </head>
 <body>
+
+<div class="topbar">
+<button class="toggle" onclick="toggleMode()">🌙 Dark Mode</button>
+</div>
 
 <header>🇮🇳 CUET PRO EXAM 🇮🇳</header>
 
@@ -122,6 +149,10 @@ button{
 
 <script>
 let answers={},startTime;
+
+function toggleMode(){
+ document.body.classList.toggle('dark');
+}
 
 function start(){
  if(!document.getElementById('name').value) return alert('Enter name');
