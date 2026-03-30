@@ -3,23 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CUET Pro Test App 🇮🇳</title>
+<title>CUET PRO 🇮🇳</title>
 <style>
-body{margin:0;font-family:sans-serif;background:#0f172a;color:white}
-header{background:linear-gradient(90deg,orange,white,green);color:black;text-align:center;padding:10px}
+body{
+ margin:0;
+ font-family:sans-serif;
+ background: linear-gradient(orange, white, green);
+ color:black;
+}
+
+header{
+ text-align:center;
+ padding:12px;
+ font-size:22px;
+ font-weight:bold;
+}
+
 .container{display:flex;flex-wrap:wrap}
 .left{flex:3;padding:15px}
-.right{flex:1;background:#1e293b;padding:10px}
-button{padding:10px;margin:5px;border:none;border-radius:6px;cursor:pointer}
-.subjects button{background:#2563eb;color:white}
-.question{background:#1e293b;margin-top:10px;padding:10px;border-radius:8px}
-.option{display:block;margin:5px 0}
-.timer{color:yellow}
-.resultScreen{display:none;text-align:center;padding:30px}
-@media(max-width:768px){.container{flex-direction:column}}
+.right{flex:1;background:#ffffffcc;padding:10px;border-radius:10px}
+
+button{
+ padding:10px;
+ margin:8px 0;
+ border:none;
+ border-radius:8px;
+ cursor:pointer;
+ background:#1e293b;
+ color:white;
+ width:200px;
+}
+
+.subjects{
+ display:flex;
+ flex-direction:column; /* ek ke niche ek */
+ align-items:center;
+}
+
+.question{
+ background:#ffffffcc;
+ margin-top:10px;
+ padding:12px;
+ border-radius:10px;
+}
+
+.option{display:block;margin:6px 0}
+
+.timer{
+ color:black;
+ font-size:18px;
+ font-weight:bold;
+}
+
+.resultScreen{
+ display:none;
+ text-align:center;
+ padding:40px;
+ font-size:20px; /* bada font */
+}
+
+.resultScreen h2{
+ font-size:28px;
+}
+
+#out{
+ font-size:20px;
+ line-height:1.8;
+ background:#ffffffcc;
+ padding:20px;
+ border-radius:10px;
+ display:inline-block;
+}
+
+@media(max-width:768px){
+ .container{flex-direction:column}
+}
 </style>
 </head>
 <body>
+
 <header>🇮🇳 CUET PRO EXAM 🇮🇳</header>
 
 <div id="login" style="text-align:center;padding:40px">
@@ -30,7 +92,6 @@ button{padding:10px;margin:5px;border:none;border-radius:6px;cursor:pointer}
 <div id="subjectScreen" style="display:none;text-align:center">
 <h2>Select Subject</h2>
 <div class="subjects">
-<button onclick="load('phy')">Physics</button>
 <button onclick="load('chem')">Chemistry</button>
 <button onclick="load('math')">Math</button>
 <button onclick="load('bio')">Biology</button>
@@ -45,6 +106,7 @@ button{padding:10px;margin:5px;border:none;border-radius:6px;cursor:pointer}
 <div id="questions"></div>
 <button onclick="submitTest()">Submit</button>
 </div>
+
 <div class="right">
 <div class="timer" id="timer"></div>
 <div id="nav"></div>
@@ -52,9 +114,10 @@ button{padding:10px;margin:5px;border:none;border-radius:6px;cursor:pointer}
 </div>
 
 <div class="resultScreen" id="result">
-<h2>Result</h2>
+<h2>📊 Test Result</h2>
 <div id="out"></div>
-<button onclick="location.reload()">Retest</button>
+<br><br>
+<button onclick="location.reload()">🔄 Retest</button>
 </div>
 
 <script>
@@ -73,7 +136,6 @@ async function load(subject){
  let res=await fetch(subject+".json");
  let data=await res.json();
 
- // shuffle
  data.sort(()=>Math.random()-0.5);
  data=data.slice(0,50);
 
@@ -111,13 +173,13 @@ function submitTest(){
  document.getElementById('exam').style.display='none';
  document.getElementById('result').style.display='block';
  document.getElementById('out').innerHTML=`
- Score: ${score}/${total}<br>
- Attempted: ${attempt}<br>
- Not Attempted: ${total-attempt}<br>
- Right: ${score}<br>
- Wrong: ${wrong}<br>
- Accuracy: ${acc}%<br>
- Time: ${time}s
+ <b>Score:</b> ${score}/${total}<br>
+ <b>Attempted:</b> ${attempt}<br>
+ <b>Not Attempted:</b> ${total-attempt}<br>
+ <b>Right:</b> ${score}<br>
+ <b>Wrong:</b> ${wrong}<br>
+ <b>Accuracy:</b> ${acc}%<br>
+ <b>Time:</b> ${time}s
  `;
 }
 
@@ -131,6 +193,6 @@ function startTimer(){
  },1000);
 }
 </script>
+
 </body>
 </html>
-
