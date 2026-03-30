@@ -6,15 +6,31 @@
 <title>CUET PRO 🇮🇳</title>
 
 <style>
-body{margin:0;font-family:sans-serif;background:#fff;color:#111}
-.dark{background:#0f172a;color:#fff}
+:root{
+  --bg:#ffffff;
+  --text:#111;
+  --card:#ffffff;
+}
+
+body{
+ margin:0;
+ font-family:sans-serif;
+ background: var(--bg);
+ color: var(--text);
+}
 
 header{
  text-align:center;
  padding:12px;
  font-size:22px;
  font-weight:bold;
- background:linear-gradient(90deg,orange,white,green);
+ background: linear-gradient(90deg, orange, white, green);
+}
+
+.dark{
+ --bg:#0f172a;
+ --text:#fff;
+ --card:#1e293b;
 }
 
 .topbar{
@@ -28,6 +44,7 @@ button{
  margin:8px 0;
  border:none;
  border-radius:8px;
+ cursor:pointer;
  background:#1e293b;
  color:white;
  width:200px;
@@ -39,50 +56,66 @@ button{
  align-items:center;
 }
 
-.container{display:flex;flex-wrap:wrap}
-.left{flex:3;padding:15px}
+.container{
+ display:flex;
+ flex-wrap:wrap;
+}
+
+.left{
+ flex:3;
+ padding:15px;
+}
 
 .question{
- background:#f1f5f9;
+ background:var(--card);
  margin-top:10px;
  padding:12px;
  border-radius:10px;
 }
 
-.option{display:block;margin:6px 0}
+.option{
+ display:block;
+ margin:6px 0;
+}
 
 .timer{
  font-size:18px;
- text-align:center;
  font-weight:bold;
+ text-align:center;
 }
 
 .resultScreen{
  display:none;
  text-align:center;
  padding:40px;
+ font-size:20px;
 }
 
 #out{
- background:#f1f5f9;
+ background:var(--card);
  padding:20px;
  border-radius:10px;
  display:inline-block;
- line-height:1.8;
 }
 
-/* MOBILE */
+/* MOBILE FIX */
 @media(max-width:768px){
- .container{flex-direction:column}
- .timer{
-  position:fixed;
-  top:60px;
-  width:100%;
-  background:black;
-  color:white;
-  padding:10px;
+ .container{
+   flex-direction:column;
  }
- .left{margin-top:80px}
+ .timer{
+   position:fixed;
+   top:60px;
+   left:0;
+   width:100%;
+   background:#000;
+   color:#fff;
+   padding:10px;
+   z-index:1000;
+ }
+ .left{
+   margin-top:80px;
+ }
 }
 </style>
 </head>
@@ -95,26 +128,33 @@ button{
 
 <header>🇮🇳 CUET PRO EXAM 🇮🇳</header>
 
-<div id="subjectScreen" style="text-align:center">
+<div id="login" style="text-align:center;padding:40px">
+<input id="name" placeholder="Enter Name"><br><br>
+<button onclick="start()">Start</button>
+</div>
+
+<div id="subjectScreen" style="display:none;text-align:center">
 <h2>Select Subject</h2>
 
 <div class="subjects">
-<button onclick="startTest('phy')">Physics</button>
-<button onclick="startTest('chem')">Chemistry</button>
-<button onclick="startTest('math')">Math</button>
-<button onclick="startTest('bio')">Biology</button>
-<button onclick="startTest('eng')">English</button>
-<button onclick="startTest('pcme')">PCME</button>
+<button onclick="load('phy')">Physics</button>
+<button onclick="load('chem')">Chemistry</button>
+<button onclick="load('math')">Math</button>
+<button onclick="load('bio')">Biology</button>
+<button onclick="load('eng')">English</button>
+<button onclick="load('pcme')">PCME</button>
 </div>
 </div>
 
 <div class="container" id="exam" style="display:none">
+
 <div class="left">
 <div id="questions"></div>
 <button onclick="submitTest()">Submit</button>
 </div>
 
 <div class="timer" id="timer">Time: 00:00</div>
+
 </div>
 
 <div class="resultScreen" id="result">
@@ -125,17 +165,22 @@ button{
 </div>
 
 <script>
-let answers={},startTime,timerOn=false;
-let qTimes={},currentQ=1,lastTime;
+let answers={},startTime;
 
 function toggleMode(){
  document.body.classList.toggle('dark');
 }
 
-async function startTest(subject){
+function start(){
+ if(!document.getElementById('name').value){
+   alert("Enter name");
+   return;
+ }
+ document.getElementById('login').style.display='none';
+ document.getElementById('subjectScreen').style.display='block';
+}
 
- timerOn = confirm("Timer chahiye?");
-
+async function load(subject){
  document.getElementById('subjectScreen').style.display='none';
  document.getElementById('exam').style.display='flex';
 
@@ -143,25 +188,15 @@ async function startTest(subject){
  let data = await res.json();
 
  data.sort(()=>Math.random()-0.5);
- data=data.slice(0,50);
+ data = data.slice(0,50);
 
- render(data);
-
- if(!timerOn){
-  document.getElementById('timer').style.display="none";
- }
-}
-
-function render(data){
  let html="";
  answers={};
- qTimes={};
 
  data.forEach((q,i)=>{
  let n=i+1;
- qTimes[n]=0;
 
- html+=`<div class="question" onclick="track(${n})">
+ html+=`<div class="question">
  <b>${n}. ${q.q}</b>`;
 
  q.options.forEach((o,j)=>{
@@ -177,24 +212,10 @@ function render(data){
  });
 
  document.getElementById('questions').innerHTML=html;
-
- lastTime=Date.now();
  startTimer();
 }
 
-function track(n){
- let now=Date.now();
- if(currentQ){
-  qTimes[currentQ]+= (now-lastTime)/1000;
- }
- currentQ=n;
- lastTime=now;
-}
-
 function submitTest(){
-
- track(currentQ);
-
  let score=0,attempt=0,total=Object.keys(answers).length;
 
  for(let i=1;i<=total;i++){
@@ -207,15 +228,9 @@ function submitTest(){
  let notAttempt=total-attempt;
  let time=Math.floor((Date.now()-startTime)/1000);
  let acc=((score/total)*100).toFixed(2);
- let avgTime=(time/total).toFixed(2);
 
  document.getElementById('exam').style.display='none';
  document.getElementById('result').style.display='block';
-
- let timeAnalysis="<br><b>Time per Question:</b><br>";
- for(let i=1;i<=5;i++){
-  timeAnalysis+=`Q${i}: ${qTimes[i].toFixed(1)}s<br>`;
- }
 
  document.getElementById('out').innerHTML=`
  Score: ${score}/${total}<br>
@@ -224,15 +239,11 @@ function submitTest(){
  Right: ${score}<br>
  Wrong: ${wrong}<br>
  Accuracy: ${acc}%<br>
- Total Time: ${time}s<br>
- Avg Time/Q: ${avgTime}s
- ${timeAnalysis}
+ Time: ${time}s
  `;
 }
 
 function startTimer(){
- if(!timerOn) return;
-
  startTime=Date.now();
 
  setInterval(()=>{
