@@ -1,53 +1,55 @@
-[
 {
-"q":"PASSAGE:\nIn today’s rapidly changing world, the role of knowledge and critical thinking has become more important than ever before. People are constantly surrounded by information coming from various sources such as social media, news platforms, and personal interactions. While this abundance of information may seem beneficial, it often creates confusion among individuals. Many people fail to differentiate between reliable and unreliable sources, which leads to the spread of misinformation.\n\nOne of the major challenges of modern society is the tendency of individuals to accept information without questioning its authenticity. This behavior not only affects personal decision-making but also has a broader impact on society. For instance, false news can create panic, damage reputations, and influence public opinion in negative ways. Therefore, it is essential for individuals to develop analytical skills and verify information before accepting it as truth.\n\nEducation plays a crucial role in shaping an individual's ability to think critically. Schools and institutions must focus not only on providing theoretical knowledge but also on developing reasoning skills. Students should be encouraged to ask questions, challenge ideas, and engage in discussions. This approach will help them become independent thinkers rather than passive learners.\n\nMoreover, technology has made it easier to access information, but it has also increased the risk of deception. Many people fabricate stories to gain popularity or financial benefits. Such deceitful practices harm society and reduce trust among individuals. Over time, this leads to a decay of moral values and weakens social relationships.\n\nTo overcome these challenges, individuals must take responsibility for their actions. They should make an effort to verify facts, think logically, and avoid spreading false information. Governments and organizations also have a role to play in ensuring that accurate information is shared with the public.\n\nIn conclusion, while the availability of information has increased significantly, the responsibility of using it wisely lies with individuals. Critical thinking, awareness, and ethical behavior are essential to building a well-informed and responsible society.\n\nQ1: What is the main idea of the passage?",
-"options":["Technology is harmful","Critical thinking is essential","Education is useless","Information is limited"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ2: What problem is discussed in the passage?",
-"options":["Lack of education","Spread of misinformation","Lack of technology","Overpopulation"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ3: The word 'abundance' means:",
-"options":["Shortage","Large quantity","Confusion","Lack"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ4: Why do people get confused?",
-"options":["Too little info","Too much info","No education","No internet"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ5: What is the role of education?",
-"options":["Only theory","Develop thinking","Entertainment","None"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ6: 'Fabricate' means:",
-"options":["Create truth","Make false story","Destroy","Build"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ7: 'Deceit' means:",
-"options":["Truth","Honesty","Fraud","Kindness"],
-"answer":"C"
-},
-{
-"q":"PASSAGE...\nQ8: Effect of false news?",
-"options":["Peace","Panic","Growth","Unity"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ9: Tone of passage:",
-"options":["Humorous","Serious","Angry","Romantic"],
-"answer":"B"
-},
-{
-"q":"PASSAGE...\nQ10: Best solution suggested:",
-"options":["Ignore info","Think critically","Avoid study","Follow blindly"],
-"answer":"B"
+  "passage": "In the bustling city of Arcadia, life seemed both promising and challenging. People with sharp acumen often gathered in crowded marketplaces, seeking fortune and opportunities, while those careless in judgment faced misfortune. Despite the bleak surroundings in some districts, many remained eager to improve their lot. Traders who fabricated stories to deceive others were eventually exposed, facing public abashment. The city council aimed to abolish deceitful practices and foster a culture where citizens adhere to honesty and fairness. However, not everyone heeded these rules; some callous individuals acted without regard for consequences. Many young adults, jaded by repeated failures, abandoned ventures that seemed abortive. Yet, a few resilient souls refused to abjure their ambitions, embracing challenges with determination. Even brittle structures could not hamper their resolve, and calamities, though frequent, did little to shake their spirit. In this environment, understanding the distinction between fortune and misfortune, and recognizing behavior that is abject versus capable, became essential for survival and success.",
+  "questions": [
+    {
+      "question": "What does 'bustling' in the passage most likely mean?",
+      "options": ["Crowded and busy", "Quiet and peaceful", "Empty and abandoned", "Hopeless and sad"],
+      "answer": "Crowded and busy"
+    },
+    {
+      "question": "Who are described as having 'sharp acumen'?",
+      "options": ["Intelligent and quick thinkers", "Lazy and careless people", "Those facing misfortune", "Jaded adults"],
+      "answer": "Intelligent and quick thinkers"
+    },
+    {
+      "question": "Which word is the opposite of 'fortune' according to the passage?",
+      "options": ["Misfortune", "Success", "Achievement", "Eager"],
+      "answer": "Misfortune"
+    },
+    {
+      "question": "What does 'abashment' refer to in the context of the passage?",
+      "options": ["Being embarrassed or shamed", "Feeling excited", "Gaining fortune", "Ignoring rules"],
+      "answer": "Being embarrassed or shamed"
+    },
+    {
+      "question": "People who are 'callous' in the story are:",
+      "options": ["Insensitive to consequences", "Highly capable", "Eager to improve", "Jaded and bored"],
+      "answer": "Insensitive to consequences"
+    },
+    {
+      "question": "What is the meaning of 'abortive' as used in the passage?",
+      "options": ["Failed or unsuccessful", "Highly successful", "Excited and eager", "Hopeless"],
+      "answer": "Failed or unsuccessful"
+    },
+    {
+      "question": "What did some people refuse to 'abjure'?",
+      "options": ["Their ambitions", "Their misfortune", "Their failures", "Their abashment"],
+      "answer": "Their ambitions"
+    },
+    {
+      "question": "Which word means 'easily broken' and is used in the passage?",
+      "options": ["Brittle", "Bleak", "Callous", "Fabricate"],
+      "answer": "Brittle"
+    },
+    {
+      "question": "Which practice did the city council aim to 'abolish'?",
+      "options": ["Deceitful practices", "Eager ambition", "Fortune-seeking", "Gathering in markets"],
+      "answer": "Deceitful practices"
+    },
+    {
+      "question": "In the passage, 'abject' would best describe:",
+      "options": ["Extreme failures or misfortune", "Strong and capable people", "Busy traders", "Eager young adults"],
+      "answer": "Extreme failures or misfortune"
+    }
+  ]
 }
-]
-
